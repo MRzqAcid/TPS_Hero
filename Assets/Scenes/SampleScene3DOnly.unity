@@ -5050,7 +5050,7 @@ Transform:
   m_GameObject: {fileID: 6097994967493721132}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.24, y: 1, z: -0.22}
+  m_LocalPosition: {x: -13.543, y: 1, z: -0.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6048,7 +6048,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBehavior
   moveSpeed: 10
   rotateSpeed: 75
-  jumpVelocity: 3
+  jumpVelocity: 5
+  IsOnGround: 1
+  GroundCheckRadius: 1.1
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  Bullet: {fileID: 6890501942984174733, guid: fb6c5e7b2f22fd94ba39599ff01e8d86, type: 3}
+  BulletSpeed: 100
 --- !u!1 &8009588233053259889
 GameObject:
   m_ObjectHideFlags: 0
