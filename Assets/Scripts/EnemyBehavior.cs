@@ -1,7 +1,16 @@
+using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyBehavior : MonoBehaviour
 {
+   private NavMeshAgent  _agent;
+   public Transform PatrolRoute;
+   private List<Transform> _locations = new List<Transform>();
+   private int _locationIndex = 0;
+   private Transform _player;
+
 
     private GameBehavior _gameManager;
 
@@ -23,7 +32,38 @@ public class EnemyBehavior : MonoBehaviour
     private void Start()
     {
         _gameManager = GameObject.Find("Game Manager").GetComponent<GameBehavior>();
+        _agent = GetComponent<NavMeshAgent>();
+        _player = GameObject.Find("Player").transform;
+        if (PatrolRoute != null)
+        {
+            foreach(Transform child in PatrolRoute)
+            {
+                _locations.Add(child);
+            }
+            
+        }
+        if (_locations.Count > 0)
+        {
+            MoveToNextPatrolLocation();
+        }
     }
+
+     private void Update()
+    { 
+        if(_locations.Count > 0 && _agent.remainingDistance < 0.5f && !_agent.pathPending)
+        {
+            MoveToNextPatrolLocation();
+        }
+    }
+
+    void MoveToNextPatrolLocation()
+    {
+        if (_locations.Count == 0) return;
+        _agent.destination = _locations[_locationIndex].position;
+        _locationIndex = (_locationIndex + 1) % _locations.Count;
+    }
+
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -34,6 +74,11 @@ public class EnemyBehavior : MonoBehaviour
             {
                 _gameManager.HP -= 2;
                 Debug.Log("PlayerHP: " + _gameManager.HP);
+            }
+
+            if (_agent != null && _player != null)
+            {
+                _agent.destination = _player.position;
             }
         }
            
@@ -50,7 +95,12 @@ public class EnemyBehavior : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.name == "Player") Debug.Log("Player out of Range - Resume Patrol!");
+        if (other.name == "Player") 
+            Debug.Log("Player out of Range - Resume Patrol!");
+        if (_locations.Count > 0)
+        {
+            MoveToNextPatrolLocation();
+        }
     }
 
 
