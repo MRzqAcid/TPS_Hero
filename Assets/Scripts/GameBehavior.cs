@@ -68,7 +68,7 @@ public class GameBehavior : MonoBehaviour
     public void RestartScene()
     {
         SceneManager.LoadScene(0);
-        Time.timeScale = 0f;
+        Time.timeScale = 1f;
     }
 
 
