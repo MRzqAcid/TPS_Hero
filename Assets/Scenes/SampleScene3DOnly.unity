@@ -2681,6 +2681,7 @@ MonoBehaviour:
   ItemText: {fileID: 1194547822}
   ProgressText: {fileID: 1235893145}
   winButton: {fileID: 1269810460}
+  loseButton: {fileID: 294882351}
 --- !u!4 &798838670
 Transform:
   m_ObjectHideFlags: 0
